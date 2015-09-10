@@ -1,45 +1,51 @@
-tolerance = 10
-def closeRed(x,y):
-  return (x.getRed() <= y.getRed() + tolerance and x.getRed() >= y.getRed() - tolerance)
-def closeBlue(x,y):
-  return (x.getBlue() <= y.getBlue() + tolerance and x.getBlue() >= y.getBlue() - tolerance)
-def closeGreen(x,y):
-  return (x.getGreen() <= y.getGreen() + tolerance and x.getGreen() >= y.getGreen() - tolerance)
-  
-def closeTo(pix1,pix2):
-  return (closeRed(pix1,pix2) and closeBlue(pix1,pix2) and closeGreen(pix1,pix2))
+import os
+
+def mySort(myList):
+  for i in range(0,len(myList) - 1):
+    for j in range(i+1, len(myList)):
+      if myList[j] < myList[i]:
+        temp = myList[i]
+        myList[i] = myList[j]
+        myList[j] = temp
+        print(1)
+
 
 pics = []
 pix = []
+
+
 path = "C:\\cygwin64\\home\\CSUMB\\CST205\\Project1\\pictures\\"
 
 flag = True
+for file in os.listdir(path):
+  if file.endswith('.png'):
+    pics.append(makePicture(path + file))
+    if flag:
+      flag = False
+      finalPic = makePicture(path + file)
+      finalPix = getPixels(finalPic)
 
-#This loop creates a list with all the pictures in it
-for x in range(1,10):
-  file = str(x) + '.png'
-  file = path + file
-  if flag:
-    toKeep = makePicture(file)
-    flag = False
-  pics.append(makePicture(file))
-  
-#This loop creates a list with pointers to all the pixels in the pics list
 for pic in pics:
-  pix.append(getPixels(pic))  
-
-toKeepPix = getPixels(toKeep)
-for pixel in toKeepPix:
-  pixel.setColor(pix[0][0].getColor())
-  
-
-#Here we attempt to compare pixels
-for i in range(0,len(pics)-1):
-  for j in range(i+1,len(pics)):
-    for k in range(0,len(pix[0])):
-      if closeTo(pix[i][k],pix[j][k]):
-        toKeepPix[k].setColor(pix[i][k].getColor())
-     
-show(toKeep)
-writePictureTo(toKeep, path + "final.png")
+  pix.append(getPixels(pic))
+ 
+for i in range(0,len(finalPix)):
+  redPix = []
+  greenPix = []
+  bluePix = []
+  for j in range(0,len(pics)):
+    redPix.append(getRed(pix[j][i])) 
+    greenPix.append(getGreen(pix[j][i]))  
+    bluePix.append(getBlue(pix[j][i])) 
+  redPix.sort()
+  redPixel = redPix[len(redPix)//2]
+  greenPix.sort()
+  greenPixel = greenPix[len(greenPix)//2]
+  bluePix.sort()
+  bluePixel = bluePix[len(bluePix)//2]
+  finalPix[i].setRed(redPixel)
+  finalPix[i].setGreen(greenPixel)
+  finalPix[i].setBlue(bluePixel)
+    
+show(finalPic)
+writePictureTo(finalPic, path + "/final/final.png")
   
