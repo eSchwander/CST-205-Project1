@@ -1,0 +1,2 @@
+In order to run this program, change the 'path' variable to whatever path your pictures are in.
+After it is complete it will display the final picture and save it to a folder inside your pictures folder named final.

@@ -1,6 +1,11 @@
+# Link to github: https://github.com/eSchwander/CST-205_Project1
+
 import os
 import time
 import types
+
+#These first two functions are used for a merge sort which i actually never use
+#As it turns out the built in sort python has is faster
 
 def myMergeSort(myList):
   length = len(myList)
@@ -44,7 +49,7 @@ def myMerge(xList, yList):
 
   
   
-startTime = time.time() # this is used to measure run time 
+#startTime = time.time() # this is used to measure run time 
 pics = [] # holds all the pictures in a folder
 pix = [] # Holds pixels for all pictures in pix
 
@@ -90,4 +95,4 @@ for i in range(0,len(finalPix)):
 #show the final pic and save it
 show(finalPic)
 writePictureTo(finalPic, path + "/final/final.png")
-print(time.time() - startTime)
+#print(time.time() - startTime)
